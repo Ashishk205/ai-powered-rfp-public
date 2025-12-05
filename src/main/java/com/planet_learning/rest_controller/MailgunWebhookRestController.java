@@ -77,7 +77,7 @@ public class MailgunWebhookRestController
         }
         
         // find proposal by vendorId and email status sent
-        Optional<Proposal> pOptional = pRepo.findAByRfpIdAndVendorIdAndStatus(Long.valueOf(rfpId), vOptional.get().getId(), ProposalStatusEnum.SENT);
+        Optional<Proposal> pOptional = pRepo.findByRfpIdAndVendorIdAndStatus(Long.valueOf(rfpId), vOptional.get().getId(), ProposalStatusEnum.SENT);
         
         if(pOptional.isEmpty()) {
         	throw new RuntimeException("Proposal not found");

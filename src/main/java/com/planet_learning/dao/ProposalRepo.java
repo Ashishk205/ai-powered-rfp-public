@@ -29,7 +29,7 @@ public interface ProposalRepo extends JpaRepository<Proposal, Long>
 			AND p.vendor.id = :vendorId
 			AND p.status = :status
 			""")
-	Optional<Proposal> findAByRfpIdAndVendorIdAndStatus(
+	Optional<Proposal> findByRfpIdAndVendorIdAndStatus(
 			@Param("rfpId") Long rfpId,
 			@Param("vendorId") Long vendorId,
 			@Param("status") ProposalStatusEnum status);
