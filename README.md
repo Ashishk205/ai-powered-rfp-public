@@ -1,3 +1,20 @@
+Context: Request For Purposal (RFP)
+Many companies run procurement through Requests for Proposal (RFPs): they define what they want to buy, email that out to multiple vendors, collect responses (often messy emails and attachments), and then someone manually compares all the quotes to decide who to award the work to. 
+This process is:
+- Slow and error-prone 
+- Full of unstructured data (emails, PDFs, free-form descriptions)
+- Repetitive: similar RFPs, similar evaluations, similar comparisons
+
+Example: User Requirements in natural language:
+chat interaction for RFP creation: "I need to procure laptops and monitors for our new office. Budget is $50,000 total. Need delivery within 30 days. We need 20 laptops with 16GB RAM and 15 monitors 27-inch. Payment terms should be net 30, and we need at least 1 year warranty."
+
+Functionality: (high-level)
+- A way to create and view structured RFPs driven by natural language input.
+- Basic vendor management (store vendors, pick them for an RFP)
+- Email sending of RFPs to selected vendors
+- Email receiving of at least one vendor response, and automatic parsing of that response with AI
+- A comparison view for proposals for a given RFP, with some form of AI-assisted evaluation or recommendation.
+
 Technology Stack Decisions:
 I chose Spring Boot for the following strategic reasons:
 
