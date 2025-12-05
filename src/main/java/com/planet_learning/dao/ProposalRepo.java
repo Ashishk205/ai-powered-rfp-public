@@ -44,4 +44,15 @@ public interface ProposalRepo extends JpaRepository<Proposal, Long>
 			@Param("rfpId") Long rfpId,
 			@Param("status") ProposalStatusEnum status,
 			@Param("vendorIds") List<Long> vendorIds);
+	
+	@Query("""
+			SELECT p FROM Proposal p 
+			WHERE p.rfp.id = :rfpId 
+			AND p.vendor.id = :vendorId
+			AND p.status IN :statuses
+			""")
+	Optional<Proposal> findByRfpIdAndVendorIdAndStatusesIn(
+			@Param("rfpId") Long rfpId,
+			@Param("vendorId") Long vendorId,
+			@Param("statuses") List<ProposalStatusEnum> statuses);
 }

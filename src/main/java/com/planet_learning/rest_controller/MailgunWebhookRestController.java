@@ -1,5 +1,6 @@
 package com.planet_learning.rest_controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -77,7 +78,8 @@ public class MailgunWebhookRestController
         }
         
         // find proposal by vendorId and email status sent
-        Optional<Proposal> pOptional = pRepo.findByRfpIdAndVendorIdAndStatus(Long.valueOf(rfpId), vOptional.get().getId(), ProposalStatusEnum.SENT);
+        Optional<Proposal> pOptional = pRepo.findByRfpIdAndVendorIdAndStatusesIn(
+        		Long.valueOf(rfpId), vOptional.get().getId(), List.of(ProposalStatusEnum.SENT, ProposalStatusEnum.RECEIVED));
         
         if(pOptional.isEmpty()) {
         	throw new RuntimeException("Proposal not found");

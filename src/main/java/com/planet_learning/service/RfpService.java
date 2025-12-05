@@ -149,6 +149,7 @@ public class RfpService
 		for(Proposal p: proposals) {
 			promptData.append("Vendor: ").append(p.getVendor().getName()).append("\n");
 			promptData.append("Vendor Proposal: ").append(p.getParsedVendorRes()).append("\n");
+			promptData.append("------------------------------").append("\n");
 		}
 
 		log.info("Vendors Proposals: {}", promptData.toString());
