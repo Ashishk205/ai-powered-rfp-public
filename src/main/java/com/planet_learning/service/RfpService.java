@@ -76,7 +76,7 @@ public class RfpService
 	}
 	
 	@Transactional
-	public void sendProposalEmailToSelectedVendors(RfpSelectedVendorsReq req)
+	public void sendProposalEmailToSelectedVendors(RfpSelectedVendorsReq req) throws Exception
 	{
 		// find the vendors and rfpById
 		List<Vendor> vendors = vendorRepo.findAllVendorsByIds(req.vendorIds());
@@ -99,16 +99,20 @@ public class RfpService
 		// send email to allSelectedVendors
 		vendors.forEach(v-> {
 			
-			// send email to vendors
-			mailgunService.sendEmail(v.getEmail(), emailSubject, emailBody);
-			
-			// make proposal record in db
-			Proposal p = new Proposal();
-			p.setRfp(rfpOptional.get());
-			p.setVendor(v); // to
-			p.setEmailContentRaw(emailBody); // email body what we sent just now
-			p.setStatus(ProposalStatusEnum.SENT); // we just sent email
-			proposalRepo.save(p);
+			try {
+				// send email to vendors
+				mailgunService.sendEmail(v.getEmail(), emailSubject, emailBody, rfpOptional.get().getId());
+				
+				// make proposal record in db
+				Proposal p = new Proposal();
+				p.setRfp(rfpOptional.get());
+				p.setVendor(v); // to
+				p.setEmailContentRaw(emailBody); // email body what we sent just now
+				p.setStatus(ProposalStatusEnum.SENT); // we just sent email
+				proposalRepo.save(p);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		});
 	}
 	
@@ -127,8 +131,11 @@ public class RfpService
 				3. and score out of 100 for each and in last recommendation(who is best)
 				4. Dont assume anything see only the present context
 				5. if you are unable to compare say 0 score from my analysis i didnt find any relvent information
+				6. In HTML table this last row must be 'overall score' and recommendation with reason why and why not.
 				
 				NOTE compare based on some details like if you found: (price, warrently, delivery time, any extra details)
+				NOTE if you found only one proposal say something like: 
+				i have only one proposal no data for comparision, wait for another vendors to reply
 				""";
 		
 		// find Proposals
@@ -156,7 +163,8 @@ public class RfpService
 		String text = chatRes.getResult().getOutput().getText();
 		*/
 		// To keep it simple
-				return this.chatClient
+		
+		return this.chatClient
 				.prompt()
 				.system(prompt)
 				.user(promptData.toString())

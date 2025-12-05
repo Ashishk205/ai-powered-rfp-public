@@ -26,6 +26,17 @@ public interface ProposalRepo extends JpaRepository<Proposal, Long>
 	@Query("""
 			SELECT p FROM Proposal p 
 			WHERE p.rfp.id = :rfpId 
+			AND p.vendor.id = :vendorId
+			AND p.status = :status
+			""")
+	Optional<Proposal> findAByRfpIdAndVendorIdAndStatus(
+			@Param("rfpId") Long rfpId,
+			@Param("vendorId") Long vendorId,
+			@Param("status") ProposalStatusEnum status);
+	
+	@Query("""
+			SELECT p FROM Proposal p 
+			WHERE p.rfp.id = :rfpId 
 			AND p.status = :status
 			AND p.vendor.id IN :vendorIds
 			""")

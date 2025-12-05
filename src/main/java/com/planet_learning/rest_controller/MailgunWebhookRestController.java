@@ -2,6 +2,8 @@ package com.planet_learning.rest_controller;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,16 +48,27 @@ public class MailgunWebhookRestController
 	public void handleIncomingEmail(
 			@RequestParam("sender") String sender,
             @RequestParam("subject") String subject,
-            @RequestParam(value = "body-plain", required = false) String body,
-            @RequestParam Map<String, String> allParams)
+            @RequestParam(value = "body-plain", required = false) String body)
 	{
 		log.debug("mailgun webhook received");
 		
 		System.out.println("=== NEW INCOMING EMAIL ===");
         System.out.println("From: " + sender);
         System.out.println("Subject: " + subject);
-        //System.out.println("Body: " + body); // 'stripped-text' creates a clean reply
         
+        // Regex to match "unique-tracking-id-<number>"
+        Pattern pattern = Pattern.compile("unique-tracking-id-(\\d+)");
+        Matcher matcher = pattern.matcher(subject);
+        
+        String rfpId = null;
+        if (matcher.find()) {
+            rfpId = matcher.group(1); // extract rfpId ( from group1 (\d+) )
+            System.out.println("Extracted RFP ID: " + rfpId);
+        } else {
+            System.out.println("Tracking ID not found in subject.");
+            return;
+        }
+
         // findVendor
         Optional<Vendor> vOptional = vRepo.findByEmail(sender);
         
@@ -64,7 +77,7 @@ public class MailgunWebhookRestController
         }
         
         // find proposal by vendorId and email status sent
-        Optional<Proposal> pOptional = pRepo.findByVendorIdAndStatus(vOptional.get().getId(), ProposalStatusEnum.SENT);
+        Optional<Proposal> pOptional = pRepo.findAByRfpIdAndVendorIdAndStatus(Long.valueOf(rfpId), vOptional.get().getId(), ProposalStatusEnum.SENT);
         
         if(pOptional.isEmpty()) {
         	throw new RuntimeException("Proposal not found");
@@ -112,4 +125,3 @@ public class MailgunWebhookRestController
 		return res;
 	}
 }
-

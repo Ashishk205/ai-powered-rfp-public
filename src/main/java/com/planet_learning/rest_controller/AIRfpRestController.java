@@ -92,14 +92,14 @@ public class AIRfpRestController
 	}
 	
 	@PostMapping("/sendProposalEmailToSelectedVendors")
-	public ApiResponse<Boolean> sendProposalEmailToSelectedVendors(@RequestBody RfpSelectedVendorsReq req)
+	public ApiResponse<Boolean> sendProposalEmailToSelectedVendors(@RequestBody RfpSelectedVendorsReq req) throws Exception
 	{
 		rfpService.sendProposalEmailToSelectedVendors(req);
 		return ApiResponse.success("Email sent successfully", true);
 	}
 	
 	@GetMapping("/testSendEmail")
-	public ResponseEntity<String> testSendEmail()
+	public ResponseEntity<String> testSendEmail() throws Exception
 	{
 		mailGunService.sendEmail("pandora20595.ak@gmail.com", "Hello from ashish", "testing email thanksworking");
 		return null;
@@ -115,6 +115,7 @@ public class AIRfpRestController
 						"data", null));
 		}
 		
+		log.info("compareProposalsByRfpIdAndVendorIds rfpId: {} and vendorIds: {}", req.rfpId(), req.vendorIds());
 		return ApiResponse.success("Data retrieved successfully", 
 				rfpService.compareProposalsByRfpIdAndVendorIds(req.rfpId(), req.vendorIds()));
 	}
