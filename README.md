@@ -20,7 +20,9 @@ I chose Spring Boot for the following strategic reasons:
 
 Spring AI Integration: I leveraged Spring AI, which provides a unified abstraction layer for interacting with LLMs. This allows for cleaner code separation between the business logic and the AI provider. It also makes the system "future-proof"—switching from OpenAI to Anthropic or Bedrock would only require a configuration change, not a code rewrite.
 
-Mature Ecosystem for Integration: The workflow relies heavily on email integration. The Java ecosystem (via JavaMailSender and standard libraries) offers battle-tested stability for SMTP/IMAP handling compared to the more fragmented NPM ecosystem.
+Mature Ecosystem for Integration(Mailgun): The workflow relies heavily on email integration. The Java ecosystem (via JavaMailSender and standard libraries) offers battle-tested stability for SMTP/IMAP handling compared to the more fragmented NPM ecosystem.
+
+Ngrok: Receiving real time webhooks in localhost system, configure this real time url in mailgun and attached your endpoint so that we receive real time webhook and perform operations.
 
 Developer Proficiency: I am highly experienced with the Spring ecosystem. Using the tool I have mastered allowed me to focus purely on the architectural complexity (AI agents, Webhooks, Data Modeling) rather than fighting syntax, resulting in a higher-quality deliverable within the timeframe.
 
