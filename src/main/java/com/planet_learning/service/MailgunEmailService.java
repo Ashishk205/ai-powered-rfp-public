@@ -29,7 +29,7 @@ public class MailgunEmailService implements EmailService
 		
 		// create a mime helper to configure the email
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		helper.setFrom("planetlearning@sandboxf8f906404dd04c8c84312f45474.mailgun.org"); // Matches your domain
+		helper.setFrom("planetlearning@sandboxf8f906404dd04c8c84312ffcd474.mailgun.org"); // Matches your domain
 		helper.setTo(to);
 		helper.setSubject(subject + ", and your " + "unique-tracking-id-" + rfpId.toString());
 		helper.setText(body);
@@ -51,7 +51,7 @@ public class MailgunEmailService implements EmailService
 	{
 		try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("planetlearning@sandboxf8f906404dd04c8c84312ffcd4445474.mailgun.org"); // Matches your domain
+            message.setFrom("planetlearning@sandboxf8f906404dd04c8c84312ffcd474.mailgun.org"); // Matches your domain
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);
