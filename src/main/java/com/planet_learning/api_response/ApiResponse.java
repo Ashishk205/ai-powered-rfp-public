@@ -45,11 +45,11 @@ public class ApiResponse<T>
 	
 	public static <T> ApiResponse<T> error(String message)
 	{
-		return new ApiResponse<T>(true, message, null);
+		return new ApiResponse<T>(false, message, null);
 	}
 	
 	public static <T> ApiResponse<T> error(String message, T data)
 	{
-		return new ApiResponse<T>(true, message, data);
+		return new ApiResponse<T>(false, message, data);
 	}
 }
