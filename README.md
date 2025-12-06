@@ -8,6 +8,8 @@ This process is:
 Example: User Requirements in natural language:
 chat interaction for RFP creation: "I need to procure laptops and monitors for our new office. Budget is $50,000 total. Need delivery within 30 days. We need 20 laptops with 16GB RAM and 15 monitors 27-inch. Payment terms should be net 30, and we need at least 1 year warranty."
 
+PROJECT OUTPUT IMAGES LINK: https://github.com/Ashishk205/ai-powered-rfp-public/tree/master/src/main/resources/static/images
+
 Functionality: (high-level)
 - A way to create and view structured RFPs driven by natural language input.
 - Basic vendor management (store vendors, pick them for an RFP)
